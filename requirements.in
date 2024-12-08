@@ -4,3 +4,6 @@ pillow
 pandas
 # sqlite3
 python-dotenv
+pydantic
+Pillow
+aiohttp
