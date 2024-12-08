@@ -1,0 +1,6 @@
+streamlit
+requests
+pillow
+pandas
+# sqlite3
+python-dotenv
