@@ -288,14 +288,14 @@ ModelRegistry.register(
         api_key_env="OPENAI_API_KEY",
         model_type=ModelType.DALLE,
         parameters={
-            "n": ParameterConfig(
-                type=WidgetType.SLIDER_INT,
-                label="Number of Images",
-                default=1,
-                min_value=1,
-                max_value=10,
-                help="Number of images to generate",
-            ),
+            # "n": ParameterConfig(
+            #     type=WidgetType.SLIDER_INT,
+            #     label="Number of Images",
+            #     default=1,
+            #     min_value=1,
+            #     max_value=10,
+            #     help="Number of images to generate",
+            # ),
             "size": ParameterConfig(
                 type=WidgetType.SELECTBOX,
                 label="Image Size",

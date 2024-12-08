@@ -16,7 +16,11 @@ class DalleGenerator(BaseGenerator):
         }
 
     async def generate(self, prompt: str, parameters: Dict) -> GenerationResult:
-        payload = {"prompt": prompt, **parameters}
+        payload = {
+            "prompt": prompt,
+            "n": 1,
+            **parameters,
+        }
         api_response = await self._send_request(payload)
 
         if api_response:
