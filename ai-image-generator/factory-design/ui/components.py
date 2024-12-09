@@ -66,5 +66,13 @@ def display_history(db_manager):
             st.write(f"**Model:** {record[2]}")
             st.write(f"**Prompt:** {record[3]}")
             st.write(f"**Parameters:** {record[4]}")
-            st.image(record[5])
+            # Add error handling and image data validation
+            try:
+                image_data = record[5]
+                if isinstance(image_data, str) and image_data.startswith('{"errors"'):
+                    st.error("Image data unavailable")
+                else:
+                    st.image(image_data)
+            except Exception as e:
+                st.error(f"Error displaying image: {str(e)}")
             st.divider()

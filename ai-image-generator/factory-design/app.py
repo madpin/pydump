@@ -98,11 +98,15 @@ async def generate_images(
     try:
         result = await generator.generate(prompt, parameters)
         if not result.success:
-            st.error(f"❌ Image generation failed for {model_name}: {result.error_message}")
+            st.error(
+                f"❌ Image generation failed for {model_name}: {result.error_message}"
+            )
             return
 
         st.success(f"✨ Image generated successfully with {model_name}!")
-        display_generated_images(result.images, model_name, prompt, parameters, db_manager)
+        display_generated_images(
+            result.images, model_name, prompt, parameters, db_manager
+        )
 
     except Exception as e:
         logger.error(f"Error generating images for {model_name}: {str(e)}")
@@ -128,6 +132,9 @@ def display_generated_images(
     """
     image_cols = st.columns(len(images))
     for idx, image in enumerate(images):
+        logger.debug(f"Image type for {model_name}: {type(image)}")
+        logger.debug(f"Image content preview: {str(image)[:200]}")
+
         db_manager.save_generation(model_name, prompt, parameters, image)
         with image_cols[idx]:
             st.image(
@@ -164,7 +171,9 @@ def render_model_selection() -> tuple[str, Dict]:
         model_config = ModelRegistry.get_model(model_name)
         if model_config:
             st.markdown(f"### ⚙️ {model_name} Parameters")
-            model_parameters[model_name] = configure_parameters(model_config, model_name)
+            model_parameters[model_name] = configure_parameters(
+                model_config, model_name
+            )
 
     return prompt, model_parameters, selected_model_names
 
@@ -186,7 +195,12 @@ async def main() -> None:
 
             with st.spinner("🎨 Creating your masterpiece..."):
                 generation_tasks = [
-                    generate_images(model_name, prompt, model_parameters.get(model_name, {}), db_manager)
+                    generate_images(
+                        model_name,
+                        prompt,
+                        model_parameters.get(model_name, {}),
+                        db_manager,
+                    )
                     for model_name in selected_model_names
                 ]
                 await asyncio.gather(*generation_tasks)
