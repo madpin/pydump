@@ -280,6 +280,32 @@ ModelRegistry.register(
     )
 )
 
+
+ModelRegistry.register(
+    ModelConfig(
+        name="StabilityAI",
+        description="Stability AI Stable Diffusion 3.5",
+        endpoint="https://api.stability.ai/v2beta/stable-image/generate/sd3",
+        api_key_env="STABILITYAI_API_KEY",
+        model_type=ModelType.STABILITY,
+        parameters={
+            **COMMON_PARAMETERS["negative_prompt"],
+            **COMMON_PARAMETERS["num_images"],
+            **COMMON_PARAMETERS["width_height"],
+            **COMMON_PARAMETERS["cfg_scale"],
+            **COMMON_PARAMETERS["seed"],
+            "model": ParameterConfig(
+                type=WidgetType.SELECTBOX,
+                label="Model Version",
+                default="sd3.5-large",
+                options=["sd3.5-large", "sd3.5-large-turbo", "sd3.5-medium"],
+                help="Select the model version to use",
+            ),
+        },
+    )
+)
+
+
 ModelRegistry.register(
     ModelConfig(
         name="DALL-E",
